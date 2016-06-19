@@ -1,0 +1,12 @@
+{
+  "instances":{
+    "bpm_instance_1": {
+      "url": "http://[your host]:2696/rest/",
+      "Authorization": "Basic [your base64 encoded auth]"
+    },
+    "bpm_instance_x": {
+      "url": "http://[your host]:2696/rest/",
+      "Authorization": "Basic [your base64 encoded auth]"
+    }
+  }
+}
