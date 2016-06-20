@@ -11,24 +11,30 @@ See the License for the specific language governing permissions and limitations 
 ###
 
 # Description
-#   Invokes BPM script
+#   Prints help witch commands for bot control
 #
 # Configuration:
-#   LIST_OF_ENV_VARS_TO_SET
+#   N/A
 #
 # Commands:
-#   hubot hello - <what the respond trigger does>
-#   orly - <what the hear trigger does>
+#   bpm help
 #
 # Notes:
-#   <optional notes required for the script>
+#   Provides formatted output for Slack adaptor
 #
 # Author:
 #   michael.mishaolov@hpe.com
 
-module.exports = (robot) ->
-  robot.respond /hello/, (msg) ->
-    msg.reply "hello!"
+Utils = require('./lib/utils')
 
-  robot.hear /orly/, (msg)->
-    msg.send "MICHAEL"
+module.exports = (robot) ->
+  robot.respond /bpm help/i, (msg) ->
+    returnHelpMessage robot, msg
+
+returnHelpMessage = (robot, msg) ->
+  helpText = Utils.loadFile(robot,"bpm-help.md")
+  if robot.adapterName is 'slack'
+    robot.emit 'slack.attachment', {channel: msg.message.room, text: helpText.replace /\*\*/g, "*"}
+  else
+    robot.send helpText
+

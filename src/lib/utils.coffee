@@ -28,13 +28,22 @@ See the License for the specific language governing permissions and limitations 
 
 
 class Utils
-  # Public:
-  loadJSON: (name) ->
+  # Loads JSON config files from root directory and return content as JSON Object
+  loadJSON: (robot, name) ->
     name = name.trim()
-    fileName="./#{name}.json"
-    fs = require 'fs'
-    jsonString = fs.readFileSync fileName, 'utf8'
+    fileName="#{name}.json"
+    robot.logger.debug "@BPM: Loading JSON #{fileName}"
+    jsonString =  @loadFile(robot, fileName)
     return JSON.parse jsonString
+
+  # Loads file and returns content as string
+  loadFile: (robot,fileName) ->
+    fileName = fileName.trim()
+    fs = require 'fs'
+    directory = fs.realpathSync(__dirname)
+    path = "#{directory}/../#{fileName}"
+    robot.logger.debug "@BPM: Loading file #{path}"
+    return fs.readFileSync path, 'utf8'
 
 # Export
 module.exports = new Utils()
