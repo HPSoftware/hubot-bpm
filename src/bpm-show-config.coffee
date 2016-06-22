@@ -8,24 +8,26 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and limitations under the License.
 
-# Public: Invokes BPM script
-#
-# Configuration:
-#   LIST_OF_ENV_VARS_TO_SET
+# Public: List configured BMP instances and their description
 #
 # Commands:
-#   hubot hello - <what the respond trigger does>
-#   orly - <what the hear trigger does>
-#
-# Notes:
-#   <optional notes required for the script>
+#   bpm show config
 #
 # Author:
 #   michael.mishaolov@hpe.com
 
-module.exports = (robot) ->
-  robot.respond /hello/, (msg) ->
-    msg.reply "hello!"
+Utils = require('./lib/utils')
+utils = new Utils()
 
-  robot.hear /orly/, (msg)->
-    msg.send "MICHAEL"
+module.exports = (robot) ->
+  robot.hear /bpm show config/i, (msg) ->
+    returnBPMConfig robot, msg
+
+returnBPMConfig = (robot, msg) ->
+  robot.logger.debug "@BPM: Loading config"
+  instancesConfig = utils.loadJSON(robot,"bpm-config")
+  robot.logger.debug "@BPM: config loaded"
+  result = ''
+  for instanceName, instanceConfig of instancesConfig['instances']
+    result += "`#{instanceName}`, #{instanceConfig['description']} \r\n"
+  msg.send result

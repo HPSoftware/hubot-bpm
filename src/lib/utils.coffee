@@ -27,9 +27,9 @@ See the License for the specific language governing permissions and limitations 
 #   michael.mishaolov@hpe.com
 
 
-class Utils
+module.exports = class Utils
   # Loads JSON config files from root directory and return content as JSON Object
-  loadJSON: (robot, name) ->
+  loadJSON: (robot,name) ->
     name = name.trim()
     fileName="#{name}.json"
     robot.logger.debug "@BPM: Loading JSON #{fileName}"
@@ -41,9 +41,7 @@ class Utils
     fileName = fileName.trim()
     fs = require 'fs'
     directory = fs.realpathSync(__dirname)
-    path = "#{directory}/../#{fileName}"
+    path = "#{directory}/../../#{fileName}"
     robot.logger.debug "@BPM: Loading file #{path}"
     return fs.readFileSync path, 'utf8'
 
-# Export
-module.exports = new Utils()
