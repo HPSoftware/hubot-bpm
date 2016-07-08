@@ -1,5 +1,11 @@
 The BPM bot supporting next set of commands
 
+**Show help**
+
+_Description_: Shows this help
+
+_Syntax_: `bpm help`
+
 **Show configuration**
 
 _Description_: List configured BMP instances and their description
