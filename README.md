@@ -53,7 +53,7 @@ Bot example configuration stored in config file at: bpm-config.json
 * The first configured instance will be used by bot as default instance for all operations.
   * You can always override the default instance by specifying in bot command that BPM instance to use.
 
-**Example of Configuration File:**
+**Example of configuration file:**
 ```json
 {
   "instances":{
