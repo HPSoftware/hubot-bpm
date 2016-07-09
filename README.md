@@ -74,7 +74,7 @@ To turn on REST API functionality you need perform following steps:
 
 1. Stop the BPM service.
 2. Open the following file in a text editor:
-…\BPM\ServletContainer\webapps\ROOT\WEB-INF\web.xml
+â€¦\BPM\ServletContainer\webapps\ROOT\WEB-INF\web.xml
 3. In the web-app tag, add the following:
 ```XML
     <servlet>
@@ -121,7 +121,7 @@ _Description_: Invokes all BPM scripts from specific Business Transaction Flow (
 
 _Syntax_: `bpm invoke all from btf <BTFs separated by ;> from app <Application Name> for host <Host Name> from <Location> location[ use bpm instance <BPM Instance Name>]`
 
-_Example_:
+_Example_: 
 * `bpm invoke all from btf myDemoApp from app demo for host myd-london-bpm_london from location London, UK use bpm instance bpm_instance_1`
 * `bpm invoke all from btf myDemoApp from app demo for host myd-london-bpm_london from location London, UK`
 
