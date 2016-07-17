@@ -21,8 +21,8 @@ See the License for the specific language governing permissions and limitations 
 # Author:
 #   michael.mishaolov@hpe.com
 
-Utils = require('./lib/io-utils')
-utils = new Utils()
+IOUtils = require('./lib/io-utils')
+utils = new IOUtils.FileUtils()
 
 module.exports = (robot) ->
   robot.hear /bpm help/i, (msg) ->

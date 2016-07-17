@@ -14,7 +14,8 @@ See the License for the specific language governing permissions and limitations 
 # Public: Invokes BPM script
 #
 # Configuration:
-#   N/A
+#   HUBOT_BPM_CONFIG_PATCH - external configuration file.
+#   If not specified bpm-config.json fromm root directory will be used
 #
 # Commands:
 #   bpm invoke script <Scripts separated by ;> from btf <BTFs separated by ;> from app <Application Name> for host <Host Name> from <Location> location[ use bpm instance <BPM Instance Name>]
@@ -24,10 +25,10 @@ See the License for the specific language governing permissions and limitations 
 # Author:
 #   michael.mishaolov@hpe.com
 
-Utils = require('./lib/io-utils')
+IOUtils = require('./lib/io-utils')
 http = require 'http'
 
-utils = new Utils()
+utils = new IOUtils.FileUtils()
 
 
 module.exports = (robot) ->
@@ -50,8 +51,12 @@ module.exports = (robot) ->
 
 #The main logic controller method
 invokeScript = (robot, msg, queryParams) ->
+  configPatch = process.env.HUBOT_BPM_CONFIG_PATCH
+  if configPatch?
+    instancesConfig = utils.loadExternalJSON(robot,configPatch)
+  else
+    instancesConfig = utils.loadJSON(robot,"bpm-config")
 
-  instancesConfig = utils.loadJSON(robot,"bpm-config")
   request = buildRequest robot,instancesConfig, queryParams
   callRESTAPI request, robot, msg, formatAndSendMessage
 
@@ -135,8 +140,9 @@ formatAndSendMessage = (robot, msg, responseJSON) ->
       fields.push field
     attachment =
       "color": if errors then 'danger' else 'good'
-      "pretext": "#{btfName} Business Transaction Flow Breakdown:",
-      "title": "Details:",
+      "pretext": " BTF: #{btfName}",
+      "title": "Transactions Details:",
+      "thumb_url": "http://i.imgur.com/naHGuGo.png",
       "fields": fields
     attachments.push attachment
   robot.logger.debug "@BPM: Sending message"

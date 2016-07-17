@@ -2,12 +2,16 @@
   "instances":{
     "bpm_instance_1": {
       "description":"BPM instance 1",
-      "url": "http://[your host]:2696/rest/",
+      "host": "[your host]",
+      "port":"2696",
+      "protocol": "[http | https]",
       "authorization": "Basic [your base64 encoded auth]"
     },
     "bpm_instance_x": {
       "description":"BPM instance X",
-      "url": "http://[your host]:2696/rest/",
+      "host": "[your host]",
+      "port":"2696",
+      "protocol": "[http | https]",
       "authorization": "Basic [your base64 encoded auth]"
     }
   }

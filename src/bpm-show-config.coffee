@@ -12,21 +12,30 @@ See the License for the specific language governing permissions and limitations 
 
 # Public: List configured BMP instances and their description
 #
+# Configuration:
+#   HUBOT_BPM_CONFIG_PATCH - external configuration file.
+#   If not specified bpm-config.json fromm root directory will be used
+#
 # Commands:
 #   bpm show config
 #
 # Author:
 #   michael.mishaolov@hpe.com
 
-Utils = require('./lib/io-utils')
-utils = new Utils()
+IOUtils = require('./lib/io-utils')
+utils = new IOUtils.FileUtils()
 
 module.exports = (robot) ->
   robot.hear /bpm show config/i, (msg) ->
     returnBPMConfig robot, msg
 
 returnBPMConfig = (robot, msg) ->
-  instancesConfig = utils.loadJSON(robot,"bpm-config")
+  configPatch = process.env.HUBOT_BPM_CONFIG_PATCH
+  if configPatch?
+    instancesConfig = utils.loadExternalJSON(robot,configPatch)
+  else
+    instancesConfig = utils.loadJSON(robot,"bpm-config")
+
   result = ''
   for instanceName, instanceConfig of instancesConfig['instances']
     result += "`#{instanceName}`, #{instanceConfig['description']} \r\n"
