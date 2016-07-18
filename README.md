@@ -67,6 +67,9 @@ Bot example configuration stored in config file at: bpm-config.json
   }
 }
 ```
+You can also point bot to use configuration file from external location.
+In order to do it you need define `HUBOT_BPM_CONFIG_PATCH` system variable that should include path to external configuration file.
+
 ### BPM Configuration
 
 In order to use bot functionality BPM REST API should be enabled.
