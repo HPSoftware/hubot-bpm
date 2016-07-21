@@ -4,22 +4,23 @@
   "version": "0.0.1",
   "author": "Michael Mishalov <michael.mishalov@hpe.com>",
   "license": "Apache License, Version 2.0",
-
-  "keywords": ["chatops","bpm","hubot","hubot-scripts"],
-
+  "keywords": [
+    "chatops",
+    "bpm",
+    "hubot",
+    "hubot-scripts"
+  ],
   "repository": {
     "type": "git",
     "url": "git://github.com/HPSoftware/hubot-bpm.git"
   },
-
   "bugs": {
     "url": "https://github.com/HPSoftware/hubot-bpm/issues"
   },
-
   "dependencies": {
-    "coffee-script": "~1.6"
+    "coffee-script": "~1.6",
+    "json-search": "^0.6.46"
   },
-
   "devDependencies": {
     "chai": "^2.1.1",
     "coffee-script": "1.6.3",
@@ -32,11 +33,10 @@
     "matchdep": "~0.3.0",
     "mocha": "^2.1.0",
     "sinon": "^1.13.0",
-    "sinon-chai": "^2.7.0"
+    "sinon-chai": "^2.7.0",
+    "json-search": "0.6.45"
   },
-
   "main": "index.coffee",
-
   "scripts": {
     "test": "grunt test"
   }

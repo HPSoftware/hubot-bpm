@@ -27,6 +27,7 @@ See the License for the specific language governing permissions and limitations 
 
 IOUtils = require('./lib/io-utils')
 http = require 'http'
+require 'json-search'
 
 utils = new IOUtils.FileUtils()
 
@@ -95,7 +96,6 @@ buildRequest = (robot, instancesConfig, queryParams) ->
 
 #Calls BPM Invoke Script REST API
 callRESTAPI = (requestOptions, robot, msg, callback) ->
-
   msg.send "Working on your request @#{msg.envelope.user.name}, it may take some time."
   req = http.get requestOptions, (res) ->
     if res.statusCode == 200
@@ -105,7 +105,13 @@ callRESTAPI = (requestOptions, robot, msg, callback) ->
       res.on 'end', () ->
         robot.logger.debug "@BPM: Parsing API content"
         responseJSON = JSON.parse content
-        callback robot, msg, responseJSON
+        if responseJSON['errorsData']?
+          searchResults = JSON.search responseJSON, "error"
+          executionErrors = for searchResult in searchResults when searchResult.key=="error"
+            "#{searchResult.val}"
+          msg.send "@#{msg.envelope.user.name} some error happened during processing of your request: " + executionErrors
+        else
+          callback robot, msg, responseJSON
      else
       robot.logger.debug "@BPM: Received wrong response code: #{res.statusCode}"
       msg.send "Sorry something happen during processing your request @#{msg.envelope.user.name}: received wrong response code: #{res.statusCode}"
