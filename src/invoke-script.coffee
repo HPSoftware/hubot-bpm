@@ -140,6 +140,7 @@ formatAndSendMessage = (robot, msg, responseJSON) ->
       else
         transactionDescription+=", Status: OK"
       field =
+        "fallback": "New message from BPM bot",
         "title": transactionName,
         "value": transactionDescription,
         "short": isShort
