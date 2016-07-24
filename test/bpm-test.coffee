@@ -11,14 +11,32 @@ See the License for the specific language governing permissions and limitations 
 ###
 
 
+Helper = require('hubot-test-helper')
 chai = require 'chai'
-sinon = require 'sinon'
-chai.use require 'sinon-chai'
 
 expect = chai.expect
 
-describe 'bpm', ->
+helper = new Helper([
+  '../node_modules/hubot-enterprise/src/0_bootstrap.coffee',
+  '../src/hubot-bpm.coffee'])
+
+describe 'hubot-bpm', ->
   beforeEach ->
-    @robot =
-      respond: sinon.spy()
-      hear: sinon.spy()
+    @room = helper.createRoom()
+
+  afterEach ->
+    @room.destroy()
+
+  it 'responds to hubot-bpm create', ->
+    @room.user.say('alice', '@hubot hubot-bpm create issue').then =>
+      expect(@room.messages).to.eql [
+        ['alice', '@hubot hubot-bpm create issue']
+        ['hubot', '@alice in hubot-bpm create']
+      ]
+
+  it 'hears hubot-bpm update', ->
+    @room.user.say('bob', 'hubot-bpm update issue').then =>
+      expect(@room.messages).to.eql [
+        ['bob', 'hubot-bpm update issue']
+        ['hubot', 'in hubot-bpm update']
+      ]
