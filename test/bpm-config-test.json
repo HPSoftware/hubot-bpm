@@ -1,0 +1,11 @@
+{
+  "instances":{
+    "bpm_instance_1": {
+      "description":"BPM instance 1",
+      "host": "hubot.bpm.test.net",
+      "port":"2696",
+      "protocol": "http",
+      "authorization": "Basic YWRtaW46YWRtaW4="
+    }
+  }
+}

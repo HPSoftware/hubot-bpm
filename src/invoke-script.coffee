@@ -121,7 +121,6 @@ callRESTAPI = (requestOptions, robot, msg, callback) ->
 
 
 formatAndSendMessage = (robot, msg, responseJSON) ->
-
   robot.logger.debug "@BPM: Preparing response message"
   attachments = []
   for btfName, btfDetails of responseJSON['scriptsData']

@@ -36,7 +36,8 @@
     "jenkins-mocha": "^2.6.0",
     "hubot": "2.x",
     "matchdep": "~0.3.0",
-    "json-search": "0.6.45"
+    "json-search": "0.6.45",
+    "nock": "~8.0.0"
   },
   "main": "index.coffee",
   "scripts": {
