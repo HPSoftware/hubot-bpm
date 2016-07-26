@@ -16,31 +16,30 @@ Helper = require('hubot-test-helper')
 chai = require 'chai'
 expect = chai.expect
 
-
+@timeout = 5000
 
 helper = new Helper([
   '../node_modules/hubot-enterprise/src/0_bootstrap.coffee',
   '../src/invoke-script.coffee'])
 
 nock.disableNetConnect()
-process.env.HUBOT_BPM_CONFIG_PATCH = "bpm-config-test.json"
+process.env.HUBOT_BPM_CONFIG_PATCH = "test/bpm-config-test.json"
 
 describe 'invoke-script-test', ->
-  beforeEach(done) ->
+  beforeEach (done) ->
     @room = helper.createRoom()
-    setTimeout(done, 1000)
-    nocks = nock.load('rec_pretty.json')
+    setTimeout done, 1000
 
   afterEach ->
     @room.destroy()
 
-  context 'Invoke specific script from specific BTF', ->
-    beforeEach (done) ->
-      nocks = nock.load('rec-script-btf.json')
-      setTimeout(done, 1000)
 
-    it 'responds to hubot-bpm create', ->
-      expectedResponse = "rrr"
+  context 'Invoke specific script from specific BTF', ->
+    beforeEach ->
+      nocks = nock.load('test/rec-script-btf.json')
+
+    it 'Responds to invoke script myDemoApp from btf myDemoApp', ->
+      expectedResponse = 'Sorry currently only Slack is supported :('
       command = '@hubot bpm invoke script myDemoApp from btf myDemoApp from app demo for host myd-vm19775_london from London, UK location use bpm instance bpm_instance_1'
       @room.user.say('alice', command).then =>
         expect(@room.messages).to.eql [
@@ -48,3 +47,6 @@ describe 'invoke-script-test', ->
           ['hubot', 'Working on your request @alice, it may take some time.']
           ['hubot', expectedResponse]
         ]
+        console.log(@room.messages.toString())
+
+nock.cleanAll()

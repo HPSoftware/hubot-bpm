@@ -97,6 +97,7 @@ buildRequest = (robot, instancesConfig, queryParams) ->
 #Calls BPM Invoke Script REST API
 callRESTAPI = (requestOptions, robot, msg, callback) ->
   msg.send "Working on your request @#{msg.envelope.user.name}, it may take some time."
+
   req = http.get requestOptions, (res) ->
     if res.statusCode == 200
       content = ''
