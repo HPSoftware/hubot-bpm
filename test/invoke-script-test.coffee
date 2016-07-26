@@ -26,7 +26,7 @@ nock.disableNetConnect();
 process.env.HUBOT_BPM_CONFIG_PATCH = "bpm-config-test.json"
 
 describe 'invoke-script-test', ->
-  beforeEach ->
+  beforeEach(done) ->
     @room = helper.createRoom()
     setTimeout(done, 1000)
     nocks = nock.load('rec_pretty.json')
