@@ -26,18 +26,17 @@
     "hubot": "2.x"
   },
   "devDependencies": {
-    "hubot-test-helper": "github:eedevops/hubot-test-helper",
-    "hubot-enterprise": "github:eedevops/hubot-enterprise",
     "chai": "^2.1.1",
     "coffee-script": "1.6.3",
-    "hubot": "2.x",
-    "jshint": "^2.9.2",
     "coffeelint": "^1.15.7",
-    "jenkins-mocha": "^2.6.0",
     "hubot": "2.x",
-    "matchdep": "~0.3.0",
+    "hubot-enterprise": "github:eedevops/hubot-enterprise",
+    "hubot-test-helper": "^1.4.4",
+    "jenkins-mocha": "^2.6.0",
+    "jshint": "^2.9.2",
     "json-search": "0.6.45",
-    "nock": "~8.0.0"
+    "matchdep": "~0.3.0",
+    "nock": "^8.0.0"
   },
   "main": "index.coffee",
   "scripts": {
