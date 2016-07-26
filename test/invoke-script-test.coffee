@@ -22,7 +22,7 @@ helper = new Helper([
   '../node_modules/hubot-enterprise/src/0_bootstrap.coffee',
   '../src/invoke-script.coffee'])
 
-nock.disableNetConnect();
+nock.disableNetConnect()
 process.env.HUBOT_BPM_CONFIG_PATCH = "bpm-config-test.json"
 
 describe 'invoke-script-test', ->
