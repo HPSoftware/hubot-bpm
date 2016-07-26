@@ -31,7 +31,7 @@
     "coffeelint": "^1.15.7",
     "hubot": "2.x",
     "hubot-enterprise": "github:eedevops/hubot-enterprise",
-    "hubot-test-helper": "^1.4.4",
+    "hubot-test-helper": "github:eedevops/hubot-test-helper",
     "jenkins-mocha": "^2.6.0",
     "jshint": "^2.9.2",
     "json-search": "0.6.45",
