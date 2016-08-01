@@ -25,6 +25,7 @@ See the License for the specific language governing permissions and limitations 
 IOUtils = require('./lib/io-utils')
 utils = new IOUtils.FileUtils()
 
+###########################################################################
 module.exports = (robot) ->
   robot.hear /bpm show config/i, (msg) ->
     returnBPMConfig robot, msg
