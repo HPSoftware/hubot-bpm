@@ -20,7 +20,7 @@ expect = chai.expect
 
 helper = new Helper([
   '../node_modules/hubot-enterprise/src/0_bootstrap.coffee',
-  '../src/invoke-script.coffee'])
+  '../src/bpm-invoke-script.coffee'])
 
 nock.disableNetConnect()
 process.env.HUBOT_BPM_CONFIG_PATCH = "test/bpm-config-test.json"
