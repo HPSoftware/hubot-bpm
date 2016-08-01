@@ -12,7 +12,7 @@ This is a project allow enable BMP users to connect BMP to ChatOps tools and  co
 ## Installation
 
 ### Hubot Configuration
-1. Generate new Hubot deployment by running `yo hubot` command or use an existing deployment you already have.
+1. Generate new Hubot deployment by running `yo hubot-enterprise` command or use an existing deployment you already have.
 2. From the Hubot main directory, run the following command:
 `npm install git+https://github.com/HPSoftware/hubot-bpm.git --save `
     * This command will install hubot-sitescope package on your Hubot.
@@ -22,6 +22,9 @@ This is a project allow enable BMP users to connect BMP to ChatOps tools and  co
   "hubot-bpm"
 ]
 ```
+
+For more information about hubot-enterprise project please refer to hubot-enterprise [Wiki](https://github.com/eedevops/hubot-enterprise/wiki/bootstrap)
+
 ## Config
 
 Bot example configuration stored in config file at: bpm-config.json
