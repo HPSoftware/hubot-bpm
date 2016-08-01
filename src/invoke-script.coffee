@@ -149,7 +149,7 @@ formatAndSendMessage = (robot, msg, responseJSON) ->
       "color": if errors then 'danger' else 'good'
       "pretext": " BTF: #{btfName}",
       "title": "Transactions Details:",
-      "thumb_url": "http://i.imgur.com/naHGuGo.png",
+      "thumb_url": "https://raw.githubusercontent.com/HPSoftware/hubot-bpm/master/resources/transaction.png",
       "fields": fields
     attachments.push attachment
   robot.logger.debug "@BPM: Sending message"
