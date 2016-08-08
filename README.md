@@ -9,6 +9,8 @@ emulating the end-user experience, and so assess site performance from different
 
 This is a project allow enable BMP users to connect BMP to ChatOps tools and  contains the source code of a npm package for a Hubot integration.
 
+Integration supported from BPM version 9.25 and greater.
+
 ## Installation
 
 ### Hubot Configuration
