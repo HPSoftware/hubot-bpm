@@ -2,14 +2,12 @@
 ![hubot-bpm](https://github.com/HPSoftware/hubot-bpm/blob/master/resources/bpm_bot_logo.png)
 
 ## Overview
-Business Process Monitor (BPM) is one of the HPE Application Performance Managementt (APM) data
+Business Process Monitor (BPM) is one of the HPE Application Performance Management (APM) data
 collectors. BPM proactively monitors enterprise applications in real time, identifying performance and
 availability problems before users experience them. It enables you to monitor sites from various locations,
 emulating the end-user experience, and so assess site performance from different client perspectives.
 
-This is a project allow enable BMP users to connect BMP to ChatOps tools and  contains the source code of a npm package for a Hubot integration.
-
-Integration supported from BPM version 9.25 and greater.
+This is a project enable BPM users to connect BPM to ChatOps tools and contains the source code of a npm package for a Hubot integration.
 
 ## Installation
 
@@ -36,7 +34,8 @@ Bot example configuration stored in config file at: bpm-config.json
   "instances":{
     "bpm_instance_1": {
       "description":"BPM instance 1",
-      "host": "[your host]",
+      "host": "[bsm host]",
+      "bpm-host": "[bpm host]",
       "port":"2696",
       "protocol": "[http | https]",
       "authorization": "Basic [your base64 encoded auth]"
@@ -44,6 +43,7 @@ Bot example configuration stored in config file at: bpm-config.json
     "bpm_instance_x": {
       "description":"BPM instance X",
       "host": "[your host]",
+      "bpm-host": "[bpm host]",
       "port":"2696",
       "protocol": "[http | https]",
       "authorization": "Basic [your base64 encoded auth]"
@@ -54,9 +54,14 @@ Bot example configuration stored in config file at: bpm-config.json
 
 * In order to configure BPM bot you need edit bpm-config.json file and specify you running BPM instances that you want to access from through you bot.
 * `Authorization` parameter is the authorization required to authenticate against your BPM instance in basic authentication format.
-  * For more details about basic atuh please check: [Wiki](https://en.wikipedia.org/wiki/Basic_access_authentication)
+  * The username and password are combined with a single colon.
+  * The resulting string is encoded using the RFC2045-MIME variant of Base64, except not limited to 76 char/line.
+  * The authorization method and a space i.e. "Basic " is then put before the encoded string.
+  For more details about basic auth please check: [Wiki](https://en.wikipedia.org/wiki/Basic_access_authentication)
 * The first configured instance will be used by bot as default instance for all operations.
   * You can always override the default instance by specifying in bot command that BPM instance to use.
+
+* Please note that the field "bpm-host" in the json is optional. If this isn't provided, the bot assumes that bpm is running in the bsm host.
 
 **Example of configuration file:**
 ```json
@@ -64,7 +69,8 @@ Bot example configuration stored in config file at: bpm-config.json
   "instances":{
     "bpm_instance_london": {
       "description":"BPM instance runing at london",
-      "host": "myd-london-bpm.com",
+      "host": "myd-london-bsm.com",
+      "bpm-host": "myd-london-bpm.com",
       "port":"2696",
       "protocol": "http",
       "authorization": "Basic YWRtaW46YWRtaW4="
@@ -109,7 +115,7 @@ _Syntax_: `bpm help`
 
 **Show configuration**
 
-_Description_: List configured BMP instances and their description
+_Description_: List configured BPM instances and their description
 
 _Syntax_: `bpm show config`
 
@@ -143,4 +149,5 @@ _Example_:
 * `bpm invoke all from app demo for host myd-london-bpm_london from location London, UK use bpm instance bpm_instance_1`
 * `bpm invoke all from app demo for host myd-london-bpm_london from location London, UK`
 
-
+## Limitations
+* https isn't supported

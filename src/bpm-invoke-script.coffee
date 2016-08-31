@@ -83,8 +83,14 @@ buildRequest = (robot, instancesConfig, queryParams) ->
   robot.logger.debug "@BPM: generated query for invokeScript API: #{path}"
   path = "/rest/invokeScript" + path
 
+  if bpmInstance['bpm-host']?
+    bpmhost = bpmInstance['bpm-host']
+  else
+    bpmhost = bpmInstance['host']
+  robot.logger.debug bpmhost
+
   options =
-    hostname: bpmInstance['host'],
+    hostname: bpmhost,
     port: bpmInstance['port'],
     path: path,
     protocol: "#{bpmInstance['protocol']}:",
