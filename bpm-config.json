@@ -1,20 +1,12 @@
 {
   "instances":{
     "bpm_instance_1": {
-      "description":"BPM instance 1",
-      "host": "[bsm host]",
-      "bpm-host": "[bpm host]",
+      "bpm-host": "iwfvm07696.hpeswlab.net",
+      "description":"iwfvm07696",
+      "host": "iwfvm05999.hpeswlab.net",
       "port":"2696",
-      "protocol": "[http | https]",
-      "authorization": "Basic [your base64 encoded auth]"
-    },
-    "bpm_instance_x": {
-      "description":"BPM instance X",
-      "host": "[bsm host]",
-      "bpm-host": "[bpm host]",
-      "port":"2696",
-      "protocol": "[http | https]",
-      "authorization": "Basic [your base64 encoded auth]"
+      "protocol": "http",
+      "authorization": "Basic YWRtaW46YWRtaW4="
     }
   }
 }

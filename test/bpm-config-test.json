@@ -2,7 +2,8 @@
   "instances":{
     "bpm_instance_1": {
       "description":"BPM instance 1",
-      "host": "hubot.bpm.test.net",
+      "bpm-host": "iwfvm07696.hpeswlab.net",
+      "host": "iwfvm05999.hpeswlab.net",
       "port":"2696",
       "protocol": "http",
       "authorization": "Basic YWRtaW46YWRtaW4="
