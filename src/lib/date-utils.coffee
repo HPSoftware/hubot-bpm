@@ -15,41 +15,30 @@ See the License for the specific language governing permissions and limitations 
 # - get timezone
 #
 # Author:
-#   arun.h-g@hpe.com
-
-http = require 'http'
-fs = require 'fs'
-IOUtils = require('./io-utils')
-utils = new IOUtils.FileUtils()
+#   arun.h-g@hpe.com,  michael.mishaolov@hpe.com
 
 class DateUtils
   constructor: ->
 
 #get FromDate for the range argument passed
-  getFromDate: (robot, range) ->
-    fromDate = new Date()
+  getRangeFromDate: (range) ->
+    date = new Date()
     if range == "hour"
-      currHour = toDate.getHours()
-      --currHour
-      fromDate.setHours(currHour)
+      date.setHours(date.getHours()-1)
     if range == "day"
-      currDate = toDate.getDate()
-      --currDate
-      fromDate.setDate(currDate)
+      date.setDate(date.getDate()-1)
     if range == "week"
-      currDate = toDate.getDate()
-      currDate = currDate - 7
-      fromDate.setDate(currDate)
+      date.setDate(date.getDate()-7)
     if range == "month"
-      currMonth = toDate.getMonth()
-      --currMonth
-      fromDate.setMonth(currMonth)
-    return fromDate
+      date.setMonth(date.getMonth()-1)
+    return date
 
 #get FromDate for the range argument passed
-  getTimeZone: (robot) ->
-    currDate = new Date()
-    split = currDate.toString().split " "
-    return split[5]
+  getTimeZoneOffset: () ->
+    offset = new Date().getTimezoneOffset()/60
+    dt = new Date(Math.abs(offset) * 3600000 + new Date(2000, 0).getTime()).toTimeString();
+    result = if offset < 0 then '-' else '+'
+    result+=(dt.substr(0,2) + ":" + dt.substr(3,2))
+    return result
 
 module.exports.DateUtils = DateUtils

@@ -27,7 +27,7 @@ utils = new IOUtils.FileUtils()
 class LWSSOUtils
   constructor: ->
 
-#Generic function to perform HTTP get calls
+  #Generic function to perform HTTP get calls
   doHTTPGet: (robot, msg, options, callback) ->
     req = http.get options, (res) ->
       if res.statusCode == 200
@@ -40,7 +40,7 @@ class LWSSOUtils
       robot.logger.debug "@BPM:Some error accrued during executing API call: #{e.message}"
       msg.send "Sorry some error happen during processing your request @#{msg.envelope.user.name}: #{e.message}"
 
-#Generic function to perform HTTP request calls
+  #Generic function to perform HTTP request calls
   doHTTPRequest: (robot, msg, options, postData, callback) ->
     req = http.request options, (res) ->
       if res.statusCode == 200
@@ -55,27 +55,14 @@ class LWSSOUtils
     req.write(postData)
     req.end()
 
-#Load json and build InstanceConfig
-  invokeScript: (robot, msg) ->
-    configPatch = process.env.HUBOT_BPM_CONFIG_PATCH
-    if configPatch?
-      instancesConfig = utils.loadExternalJSON(robot,configPatch)
-    else
-      instancesConfig = utils.loadJSON(robot,"bpm-config")
-    return instancesConfig
 
-#Authenticate to APM and get LWSSO cookie
-  getLWSSOAuth: (robot, msg, instancesConfig) ->
-    for instanceName, instanceConfig of instancesConfig['instances']
-      bpmInstanceName = instanceName
-      break
-    bpmInstance = instancesConfig['instances'][bpmInstanceName]
+  #Authenticate to APM and get LWSSO cookie
+  getLWSSOAuth: (robot, msg, bpmInstance) ->
     decodedString = utils.decodeInBase64(bpmInstance['authorization'])
     decodedStringArray = decodedString.split ":"
     login = decodedStringArray[0]
     password = decodedStringArray[1]
     options =
-      bpmInstance: bpmInstance,
       hostname: bpmInstance['host'],
       path: "/topaz/TopazSiteServlet?userlogin="+login+"&userloginValue="+login+"&userpassword="+password+"&autologin=yes&requestType=login",
       protocol: "#{bpmInstance['protocol']}:",

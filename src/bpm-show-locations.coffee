@@ -20,15 +20,17 @@ See the License for the specific language governing permissions and limitations 
 
 LWSSOUtils = require('./lib/lwsso-utils')
 lwssoutils = new LWSSOUtils.LWSSOUtils()
+ConfigUtils = require('./lib/config-utils')
+configUtils = new ConfigUtils.ConfigUtils()
 
 module.exports = (robot) ->
   robot.hear /bpm show locations for app with id (.*)/i, (msg) ->
-    instancesConfig = lwssoutils.invokeScript robot, msg
-    options = lwssoutils.getLWSSOAuth robot, msg, instancesConfig
+    bpmInstance = configUtils.getDefaultInstance robot
+    options = lwssoutils.getLWSSOAuth robot, msg, bpmInstance
     cookie = ''
     lwssoutils.doHTTPGet robot, msg, options, (robot, msg , res) ->
       cookie = res.headers["set-cookie"]
-      getLocations robot, msg, cookie, options.bpmInstance, {appID:msg.match[1].trim()}
+      getLocations robot, msg, cookie, bpmInstance, {appID:msg.match[1].trim()}
 
 #Perform call to get applications API
 getLocations = (robot, msg, cookie, bpmInstance, queryParams) ->

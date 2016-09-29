@@ -19,51 +19,54 @@ See the License for the specific language governing permissions and limitations 
 #   arun.h-g@hpe.com
 
 LWSSOUtils = require('./lib/lwsso-utils')
-lwssoutils = new LWSSOUtils.LWSSOUtils()
+lwssoUtils = new LWSSOUtils.LWSSOUtils()
 DateUtils = require('./lib/date-utils')
 dateUtils = new DateUtils.DateUtils()
-querystring = require('querystring');
+ConfigUtils = require('./lib/config-utils')
+configUtils = new ConfigUtils.ConfigUtils()
 
 module.exports = (robot) ->
   robot.hear /bpm show status of app with id (.*) for the past (.*)/i, (msg) ->
-    instancesConfig = lwssoutils.invokeScript robot, msg
-    options = lwssoutils.getLWSSOAuth robot, msg, instancesConfig
+    bpmInstance =  configUtils.getDefaultInstance robot
+    options = lwssoUtils.getLWSSOAuth robot, msg, bpmInstance
     cookie = ''
-    lwssoutils.doHTTPGet robot, msg, options, (robot, msg , res) ->
+    lwssoUtils.doHTTPGet robot, msg, options, (robot, msg , res) ->
       cookie = res.headers["set-cookie"]
-      getAppStatus robot, msg, cookie, options.bpmInstance, {appID:msg.match[1].trim()}, {appID:msg.match[2].trim()}
+      getAppStatus robot, msg, cookie, bpmInstance, msg.match[1].trim(), msg.match[2].trim()
+
 
 #Perform call to get applications API
-getAppStatus = (robot, msg, cookie, bpmInstance, appID, freq) ->
-  toDate = new Date().valueOf()
-  fromDate = dateUtils.getFromDate(freq).valueOf()
-  postData = querystring.stringify({
-    "applicationIds": [
-      appID
-    ],
-    "clientGmtOffset": dateUtils.getTimeZone(),
+getAppStatus = (robot, msg, cookie, bpmInstance, appID, frequency) ->
+  toDate = new Date().getTime() // 1000 #we need time in seconds
+  fromDate = dateUtils.getRangeFromDate(frequency).getTime() // 1000 #we need time in seconds
+  appIDsArray = [];
+  appIDsArray.push(appID)
+  robot.logger.debug "@BPM: timezone offset: "+ dateUtils.getTimeZoneOffset()
+  postData = {
+    "applicationIds":  appIDsArray,
+    "clientGmtOffset": dateUtils.getTimeZoneOffset(),
     "timeTo": toDate,
     "timeFrom": fromDate,
-    "timeUnit": "DAY",
+    "timeUnit": "HOUR",
     "timeUnitsNum": 1,
-    "timeView": freq
-  });
+    "timeView": frequency
+  };
   options =
     hostname: bpmInstance['host'],
-    path: "topaz/eum/reports/eumReports/applicationOverview/overview",
+    path: "/eum-web/bsmproxy?method="+ encodeURI("eumReports/applicationOverview/overview"),
     protocol: "#{bpmInstance['protocol']}:",
     method: 'POST',
     headers:
       'Set-Cookie': cookie
       'Cookie': cookie
+      'User-Agent': 'Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/53.0.2785.116 Safari/537.36'
       'Content-Type': 'application/json'
-      'Content-Length': Buffer.byteLength(postData)
       'Connection': 'keep-alive'
-  lwssoutils.doHTTPRequest robot, msg, options, postData, (robot, msg , res) ->
+      'Content-Length': Buffer.byteLength(JSON.stringify(postData))
+  lwssoUtils.doHTTPRequest robot, msg, options, JSON.stringify(postData), (robot, msg , res) ->
     content = ''
     res.on 'data', (chunk) ->
       content += chunk.toString()
     res.on 'end', () ->
       robot.logger.debug "@BPM: Returning API response content"
-      data = JSON.parse(content)
-      msg.send data
+      msg.send content

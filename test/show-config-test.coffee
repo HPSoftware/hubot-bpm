@@ -33,7 +33,7 @@ describe 'show-config-test', ->
   context 'Show current configuration', ->
 
     it 'Responds to show current BPM config', ->
-      expectedResponse = '`bpm_instance_1`, BPM instance 1 \r\n'
+      expectedResponse = '`bpm_instance_1`, BPM instance 1 - DO NOT CHANGE THIS CONFIGURATION IT USED BUY TEST AS IS \r\n'
       command = '@hubot bpm show config'
       @room.user.say('alice', command).then =>
         expect(@room.messages).to.eql [

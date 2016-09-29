@@ -23,15 +23,18 @@ See the License for the specific language governing permissions and limitations 
 
 LWSSOUtils = require('./lib/lwsso-utils')
 lwssoutils = new LWSSOUtils.LWSSOUtils()
+ConfigUtils = require('./lib/config-utils')
+configUtils = new ConfigUtils.ConfigUtils()
+
 
 module.exports = (robot) ->
   robot.hear /bpm show apps/i, (msg) ->
-    instancesConfig = lwssoutils.invokeScript robot, msg
-    options = lwssoutils.getLWSSOAuth robot, msg, instancesConfig
+    bpmInstance = configUtils.getDefaultInstance robot
+    options = lwssoutils.getLWSSOAuth robot, msg, bpmInstance
     cookie = ''
     lwssoutils.doHTTPGet robot, msg, options, (robot, msg , res) ->
       cookie = res.headers["set-cookie"]
-      getApplications robot, msg, cookie, options.bpmInstance
+      getApplications robot, msg, cookie, bpmInstance
 
 #Perform call to get applications API
 getApplications = (robot, msg, cookie, bpmInstance) ->
@@ -46,12 +49,13 @@ getApplications = (robot, msg, cookie, bpmInstance) ->
 
   lwssoutils.doHTTPGet robot, msg, options, (robot, msg , res) ->
     content = ''
-    result = 'Application Name, Application ID\n'
+    content.format
     res.on 'data', (chunk) ->
       content += chunk.toString()
     res.on 'end', () ->
       robot.logger.debug "@BPM: Returning API response content"
       data = JSON.parse(content)
+      result = 'Found following applications:\n'
       for application in data.flatApplications
-        result += "#{application['name']}, #{application['id']} \r\n"
+        result += "*Name*: #{application['name']}, *ID*: `#{application['id']}`\n"
       msg.send result

@@ -30,12 +30,12 @@ describe 'show-apps-test', ->
   afterEach ->
     @room.destroy()
 
-  context 'bpm show apps', ->
+  context 'Show available applications', ->
     beforeEach ->
-      nocks = nock.load('test/show-apps.json')
+      nocks = nock.load('test/rec-show-apps.json')
 
     it 'Responds to bpm show apps', ->
-      expectedResponse = 'Application Name, Application ID'
+      expectedResponse = 'Found following applications:\n*Name*: testApp, *ID*: `7747bbc51e846435a22cd9fbac43a0c3`\n*Name*: test92832, *ID*: `ae9e216aabbbef703364a9f13232b6c3`\n'
       command = 'bpm show apps'
       @room.user.say('alice', command).then =>
         expect(@room.messages).to.eql [
