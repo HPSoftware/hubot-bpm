@@ -87,7 +87,7 @@ buildRequest = (robot, instancesConfig, queryParams) ->
     bpmhost = bpmInstance['bpm-host']
   else
     bpmhost = bpmInstance['host']
-  robot.logger.debug bpmhost
+
 
   options =
     hostname: bpmhost,

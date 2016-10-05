@@ -10,18 +10,19 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and limitations under the License.
 ###
 
-
+nock = require 'nock'
 Helper = require('hubot-test-helper')
 chai = require 'chai'
 expect = chai.expect
 
 helper = new Helper([
   '../node_modules/hubot-enterprise/src/0_bootstrap.coffee',
-  '../src/bpm-show-config.coffee'])
+  '../src/bpm-show-apps.coffee'])
 
+nock.disableNetConnect()
 process.env.HUBOT_BPM_CONFIG_PATCH = "test/bpm-config-test.json"
 
-describe 'show-config-test', ->
+describe 'show-apps-test', ->
   beforeEach (done) ->
     @room = helper.createRoom()
     setTimeout done, 1000
@@ -29,15 +30,18 @@ describe 'show-config-test', ->
   afterEach ->
     @room.destroy()
 
+  context 'Show available applications', ->
+    beforeEach ->
+      nocks = nock.load('test/rec-show-apps.json')
 
-  context 'Show current configuration', ->
-
-    it 'Responds to show current BPM config', ->
-      expectedResponse = '`bpm_instance_1`, BPM instance 1 - DO NOT CHANGE THIS CONFIGURATION IT USED BUY TEST AS IS \r\n'
-      command = '@hubot bpm show config'
+    it 'Responds to bpm show apps', ->
+      expectedResponse = 'Found following applications:\n*Name*: testApp, *ID*: `7747bbc51e846435a22cd9fbac43a0c3`\n*Name*: test92832, *ID*: `ae9e216aabbbef703364a9f13232b6c3`\n'
+      command = 'bpm show apps'
       @room.user.say('alice', command).then =>
         expect(@room.messages).to.eql [
           ['alice', command]
           ['hubot', expectedResponse]
         ]
         console.log(@room.messages.toString())
+
+nock.cleanAll()

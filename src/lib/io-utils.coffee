@@ -59,5 +59,15 @@ class FileUtils
     robot.logger.debug "@BPM: Loading file #{path}"
     return fs.readFileSync path, 'utf8'
 
+  encodeInBase64: (string) ->
+    encodedString = new Buffer(string).toString('base64')
+    return encodedString
+
+  decodeInBase64: (string) ->
+    encodedStringArray = string.split " "
+    encodedString = encodedStringArray[1]
+    decodedString = new Buffer(encodedString, 'base64').toString('ascii')
+    return decodedString
+
 
 module.exports.FileUtils = FileUtils
