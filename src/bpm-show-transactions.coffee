@@ -45,14 +45,14 @@ getTransactions = (robot, msg, cookie, bpmInstance, queryParams) ->
 
   lwssoutils.doHTTPGet robot, msg, options, (robot, msg , res) ->
     content = ''
-    result = 'BTF: Transactions..\n'
     res.on 'data', (chunk) ->
       content += chunk.toString()
     res.on 'end', () ->
       robot.logger.debug "@BPM: Returning API response content"
       data = JSON.parse(content)
+      result = 'Found following BTF and transactions:\n'
       for application in data.flatBtfs
-        result += "#{application['name']}: "
+        result += "*BTF*: #{application['name']}: "
         for application in application.transactions
           result += "#{application['name']}, "
         result += "\n"

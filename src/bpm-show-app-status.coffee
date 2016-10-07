@@ -69,4 +69,13 @@ getAppStatus = (robot, msg, cookie, bpmInstance, appID, frequency) ->
       content += chunk.toString()
     res.on 'end', () ->
       robot.logger.debug "@BPM: Returning API response content"
-      msg.send content
+      data = JSON.parse(content)
+      if data.success == true
+        result = 'Application status in the last '+frequency+':\n'
+        result += "*Average availability*: "+ data.availabilityAverage + "\n"
+        result += "*Average response*: "+ data.responseAverage + "\n"
+        result += "*Total failures*: "+ data.failuresTotal + "\n"
+        result += "*Total volume*: "+ data.totalVolume + "\n"
+      else
+        result = 'Sorry, there is a problem in fetching the app status'
+      msg.send result

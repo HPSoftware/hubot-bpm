@@ -51,6 +51,7 @@ getLocations = (robot, msg, cookie, bpmInstance, queryParams) ->
     res.on 'end', () ->
       robot.logger.debug "@BPM: Returning API response content"
       data = JSON.parse(content)
+      result = 'Found following locations:\n'
       for application in data.bpmAgents
-        result += "#{application['hostName']}, #{application['locationName']} \r\n"
+        result += "*Hostname*: #{application['hostName']}, *Location name*: `#{application['locationName']}`\n"
       msg.send result
