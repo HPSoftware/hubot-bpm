@@ -16,7 +16,6 @@ Helper = require('hubot-test-helper')
 chai = require 'chai'
 expect = chai.expect
 
-@timeout = 5000
 
 helper = new Helper([
   '../node_modules/hubot-enterprise/src/0_bootstrap.coffee',
@@ -26,6 +25,7 @@ nock.disableNetConnect()
 process.env.HUBOT_BPM_CONFIG_PATCH = "test/bpm-config-test.json"
 
 describe 'invoke-script-test', ->
+  @timeout 5000
   beforeEach (done) ->
     @room = helper.createRoom()
     setTimeout done, 1000
