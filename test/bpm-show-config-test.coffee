@@ -15,6 +15,7 @@ Helper = require('hubot-test-helper')
 chai = require 'chai'
 expect = chai.expect
 
+
 helper = new Helper([
   '../node_modules/hubot-enterprise/src/0_bootstrap.coffee',
   '../src/bpm-show-config.coffee'])
@@ -22,6 +23,7 @@ helper = new Helper([
 process.env.HUBOT_BPM_CONFIG_PATCH = "test/bpm-config-test.json"
 
 describe 'show-config-test', ->
+  @timeout = 5000
   beforeEach (done) ->
     @room = helper.createRoom()
     setTimeout done, 1000
