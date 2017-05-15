@@ -22,7 +22,7 @@ helper = new Helper([
 nock.disableNetConnect()
 process.env.HUBOT_BPM_CONFIG_PATCH = "test/bpm-config-test.json"
 
-describe 'show-apps-test', ->
+describe 'show-transactions-test', ->
   @timeout 5000
   beforeEach (done) ->
     @room = helper.createRoom()

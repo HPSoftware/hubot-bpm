@@ -17,12 +17,12 @@ expect = chai.expect
 
 helper = new Helper([
   '../node_modules/hubot-enterprise/src/0_bootstrap.coffee',
-  '../src/bpm-show-locations.coffee'])
+  '../src/bpm-show-app-status.coffee'])
 
 nock.disableNetConnect()
 process.env.HUBOT_BPM_CONFIG_PATCH = "test/bpm-config-test.json"
 
-describe 'show-locations-test', ->
+describe 'show-app-status-test', ->
   @timeout 5000
   beforeEach (done) ->
     @room = helper.createRoom()
@@ -31,13 +31,16 @@ describe 'show-locations-test', ->
   afterEach ->
     @room.destroy()
 
-  context 'Show available locations for application', ->
+  context 'Show application status', ->
     beforeEach ->
-      nocks = nock.load('test/rec-show-locations.json')
+      nocks = nock.load('test/rec-show-app-status.json')
+      for scope in nocks
+        scope.filteringRequestBody = (body, aRecordedBody) ->
+          return "*" #Since the actual body contains timestamp we need this WA to ignore it.
 
-    it 'Responds to bpm show locations for app with dbfc4bf683204c89d5a0f79692ecbc5b id', ->
-      expectedResponse = 'Found following locations:\n*Hostname*: btpvm2486_1, *Location name*: `London`\n'
-      command = 'bpm show locations for app with dbfc4bf683204c89d5a0f79692ecbc5b id'
+    it 'Responds to bpm show status of app with id dbfc4bf683204c89d5a0f79692ecbc5b for the past hour timeframe', ->
+      expectedResponse = 'Application status in the last hour:\n*Average availability*: 0\n*Average response*: 0\n*Total failures*: 0\n*Total volume*: 0\n'
+      command = 'bpm show status of app with id dbfc4bf683204c89d5a0f79692ecbc5b for the past hour timeframe'
       @room.user.say('alice', command).then =>
         expect(@room.messages).to.eql [
           ['alice', command]
