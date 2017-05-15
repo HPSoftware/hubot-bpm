@@ -31,10 +31,8 @@ class LWSSOUtils
   doHTTPGet: (robot, msg, options, callback) ->
     req = http.get options, (res) ->
       if res.statusCode == 200
-        console.log "success"
         callback robot, msg , res
       else
-        console.log "here6"
         robot.logger.debug "@BPM: Received wrong response code: #{res.statusCode}"
         msg.send "Sorry, Error occured during processing your request @#{msg.envelope.user.name}: received wrong response code: #{res.statusCode}"
     req.on 'error', (e) ->
@@ -45,10 +43,8 @@ class LWSSOUtils
   doHTTPRequest: (robot, msg, options, postData, callback) ->
     req = http.request options, (res) ->
       if res.statusCode == 200
-        console.log "success"
         callback robot, msg , res
       else
-        console.log "here5"
         robot.logger.debug "@BPM: Received wrong response code: #{res.statusCode}"
         msg.send "Sorry, Error occured during processing your request @#{msg.envelope.user.name}: received wrong response code: #{res.statusCode}"
     req.on 'error', (e) ->

@@ -24,14 +24,14 @@ ConfigUtils = require('./lib/config-utils')
 configUtils = new ConfigUtils.ConfigUtils()
 
 module.exports = (robot) ->
-  robot.hear /bpm show locations for app with id (.*)$/i, (msg) ->
+  robot.hear /bpm show locations for app with (.*) id$/i, (msg) ->
     bpmInstance = configUtils.getDefaultInstance robot
     options = lwssoutils.getLWSSOAuth robot, msg, bpmInstance
     cookie = ''
     lwssoutils.doHTTPGet robot, msg, options, (robot, msg , res) ->
       cookie = res.headers["set-cookie"]
       getLocations robot, msg, cookie, bpmInstance, {appID:msg.match[1].trim()}
-  robot.hear /bpm show locations for app with id (.*) for instance (.*)/i, (msg) ->
+  robot.hear /bpm show locations for app with (.*) id for instance (.*)/i, (msg) ->
     bpmInstance = configUtils.getInstance msg.match[2].trim(), robot
     options = lwssoutils.getLWSSOAuth robot, msg, bpmInstance
     cookie = ''

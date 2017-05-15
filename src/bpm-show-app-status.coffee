@@ -26,16 +26,14 @@ ConfigUtils = require('./lib/config-utils')
 configUtils = new ConfigUtils.ConfigUtils()
 
 module.exports = (robot) ->
-  robot.hear /bpm show status of app with id (.*) for the past (.*)$/i, (msg) ->
-    console.log "here1"
+  robot.hear /bpm show status of app with id (.*) for the past (.*) timeframe$/i, (msg) ->
     bpmInstance =  configUtils.getDefaultInstance robot
     options = lwssoUtils.getLWSSOAuth robot, msg, bpmInstance
     cookie = ''
     lwssoUtils.doHTTPGet robot, msg, options, (robot, msg , res) ->
       cookie = res.headers["set-cookie"]
       getAppStatus robot, msg, cookie, bpmInstance, msg.match[1].trim(), msg.match[2].trim()
-  robot.hear /bpm show status of app with id (.*) for the past (.*) use instance (.*)/i, (msg) ->
-    console.log "here2"
+  robot.hear /bpm show status of app with id (.*) for the past (.*) for instance (.*)/i, (msg) ->
     bpmInstance = configUtils.getInstance msg.match[3].trim(), robot
     options = lwssoUtils.getLWSSOAuth robot, msg, bpmInstance
     cookie = ''
@@ -47,7 +45,7 @@ module.exports = (robot) ->
 getAppStatus = (robot, msg, cookie, bpmInstance, appID, frequency) ->
   toDate = new Date().getTime() // 1000 #we need time in seconds
   fromDate = dateUtils.getRangeFromDate(frequency).getTime() // 1000 #we need time in seconds
-  appIDsArray = [];
+  appIDsArray = []
   appIDsArray.push(appID)
   robot.logger.debug "@BPM: timezone offset: "+ dateUtils.getTimeZoneOffset()
   postData = {
