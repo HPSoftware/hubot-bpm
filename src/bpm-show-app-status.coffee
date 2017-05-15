@@ -26,14 +26,22 @@ ConfigUtils = require('./lib/config-utils')
 configUtils = new ConfigUtils.ConfigUtils()
 
 module.exports = (robot) ->
-  robot.hear /bpm show status of app with id (.*) for the past (.*)/i, (msg) ->
+  robot.hear /bpm show status of app with id (.*) for the past (.*)$/i, (msg) ->
+    console.log "here1"
     bpmInstance =  configUtils.getDefaultInstance robot
     options = lwssoUtils.getLWSSOAuth robot, msg, bpmInstance
     cookie = ''
     lwssoUtils.doHTTPGet robot, msg, options, (robot, msg , res) ->
       cookie = res.headers["set-cookie"]
       getAppStatus robot, msg, cookie, bpmInstance, msg.match[1].trim(), msg.match[2].trim()
-
+  robot.hear /bpm show status of app with id (.*) for the past (.*) use instance (.*)/i, (msg) ->
+    console.log "here2"
+    bpmInstance = configUtils.getInstance msg.match[3].trim(), robot
+    options = lwssoUtils.getLWSSOAuth robot, msg, bpmInstance
+    cookie = ''
+    lwssoUtils.doHTTPGet robot, msg, options, (robot, msg , res) ->
+      cookie = res.headers["set-cookie"]
+      getAppStatus robot, msg, cookie, bpmInstance, msg.match[1].trim(), msg.match[2].trim()
 
 #Perform call to get applications API
 getAppStatus = (robot, msg, cookie, bpmInstance, appID, frequency) ->

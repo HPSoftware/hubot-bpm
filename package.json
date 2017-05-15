@@ -19,7 +19,6 @@
   },
   "dependencies": {
     "coffee-script": "~1.6",
-    "json-search": "^0.6.46",
     "bluebird": "^3.3.4"
   },
   "peerDependencies": {

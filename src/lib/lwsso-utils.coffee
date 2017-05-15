@@ -34,11 +34,12 @@ class LWSSOUtils
         console.log "success"
         callback robot, msg , res
       else
+        console.log "here6"
         robot.logger.debug "@BPM: Received wrong response code: #{res.statusCode}"
-        msg.send "Sorry something happen during processing your request @#{msg.envelope.user.name}: received wrong response code: #{res.statusCode}"
+        msg.send "Sorry, Error occured during processing your request @#{msg.envelope.user.name}: received wrong response code: #{res.statusCode}"
     req.on 'error', (e) ->
-      robot.logger.debug "@BPM:Some error accrued during executing API call: #{e.message}"
-      msg.send "Sorry some error happen during processing your request @#{msg.envelope.user.name}: #{e.message}"
+      robot.logger.debug "@BPM:Error occured during executing API call: #{e.message}"
+      msg.send "Sorry, Error occured during processing your request @#{msg.envelope.user.name}: #{e.message}"
 
   #Generic function to perform HTTP request calls
   doHTTPRequest: (robot, msg, options, postData, callback) ->
@@ -47,11 +48,12 @@ class LWSSOUtils
         console.log "success"
         callback robot, msg , res
       else
+        console.log "here5"
         robot.logger.debug "@BPM: Received wrong response code: #{res.statusCode}"
-        msg.send "Sorry something happen during processing your request @#{msg.envelope.user.name}: received wrong response code: #{res.statusCode}"
+        msg.send "Sorry, Error occured during processing your request @#{msg.envelope.user.name}: received wrong response code: #{res.statusCode}"
     req.on 'error', (e) ->
       robot.logger.debug "@BPM:Some error accrued during executing API call: #{e.message}"
-      msg.send "Sorry some error happen during processing your request @#{msg.envelope.user.name}: #{e.message}"
+      msg.send "Sorry, Error occured during processing your request @#{msg.envelope.user.name}: #{e.message}"
     req.write(postData)
     req.end()
 

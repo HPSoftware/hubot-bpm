@@ -24,8 +24,15 @@ ConfigUtils = require('./lib/config-utils')
 configUtils = new ConfigUtils.ConfigUtils()
 
 module.exports = (robot) ->
-  robot.hear /bpm show transactions for app with id (.*)/i, (msg) ->
+  robot.hear /bpm show transactions for app with id (.*)$/i, (msg) ->
     bpmInstance = configUtils.getDefaultInstance robot
+    options = lwssoutils.getLWSSOAuth robot, msg, bpmInstance
+    cookie = ''
+    lwssoutils.doHTTPGet robot, msg, options, (robot, msg , res) ->
+      cookie = res.headers["set-cookie"]
+      getTransactions robot, msg, cookie, bpmInstance, {appID:msg.match[1].trim()}
+  robot.hear /bpm show transactions for app with id (.*) for instance (.*)/i, (msg) ->
+    bpmInstance = configUtils.getInstance msg.match[2].trim(), robot
     options = lwssoutils.getLWSSOAuth robot, msg, bpmInstance
     cookie = ''
     lwssoutils.doHTTPGet robot, msg, options, (robot, msg , res) ->
@@ -52,7 +59,7 @@ getTransactions = (robot, msg, cookie, bpmInstance, queryParams) ->
       data = JSON.parse(content)
       result = 'Found following BTF and transactions:\n'
       for application in data.flatBtfs
-        result += "*BTF*: #{application['name']}: "
+        result += "*BTF*: #{application['name']}: \t"
         for application in application.transactions
           result += "#{application['name']}, "
         result += "\n"

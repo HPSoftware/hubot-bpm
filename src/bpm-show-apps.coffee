@@ -26,10 +26,16 @@ lwssoutils = new LWSSOUtils.LWSSOUtils()
 ConfigUtils = require('./lib/config-utils')
 configUtils = new ConfigUtils.ConfigUtils()
 
-
 module.exports = (robot) ->
-  robot.hear /bpm show apps/i, (msg) ->
+  robot.hear /bpm show apps$/i, (msg) ->
     bpmInstance = configUtils.getDefaultInstance robot
+    options = lwssoutils.getLWSSOAuth robot, msg, bpmInstance
+    cookie = ''
+    lwssoutils.doHTTPGet robot, msg, options, (robot, msg , res) ->
+      cookie = res.headers["set-cookie"]
+      getApplications robot, msg, cookie, bpmInstance
+  robot.hear /bpm show apps for instance (.*)/i, (msg) ->
+    bpmInstance = configUtils.getInstance msg.match[1].trim(), robot
     options = lwssoutils.getLWSSOAuth robot, msg, bpmInstance
     cookie = ''
     lwssoutils.doHTTPGet robot, msg, options, (robot, msg , res) ->

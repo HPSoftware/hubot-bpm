@@ -36,4 +36,11 @@ class ConfigUtils
     for instanceName, instanceConfig of instancesConfig['instances']
       return instanceConfig
 
+#Get instance name
+  getInstance: (instance, robot) ->
+    instancesConfig = @getBotConfig(robot)
+    for instanceName, instanceConfig of instancesConfig['instances']
+      if(instanceName == instance)
+        return instanceConfig
+
 module.exports.ConfigUtils = ConfigUtils
