@@ -53,9 +53,9 @@ getAppStatus = (robot, msg, cookie, bpmInstance, appID, frequency) ->
     "clientGmtOffset": dateUtils.getTimeZoneOffset(),
     "timeTo": toDate,
     "timeFrom": fromDate,
-    "timeUnit": frequency,
+    "timeUnit": "#{frequency}",
     "timeUnitsNum": 1,
-    "timeView": frequency
+    "timeView": "#{frequency}"
   };
   options =
     hostname: bpmInstance['host'],
