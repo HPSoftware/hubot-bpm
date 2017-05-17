@@ -48,7 +48,7 @@ getAppStatus = (robot, msg, cookie, bpmInstance, appID, frequency) ->
   appIDsArray = []
   appIDsArray.push(appID)
   robot.logger.debug "@BPM: timezone offset: "+ dateUtils.getTimeZoneOffset()
-  postData = {
+  postData =
     "applicationIds":  appIDsArray,
     "clientGmtOffset": dateUtils.getTimeZoneOffset(),
     "timeTo": toDate,
@@ -56,7 +56,7 @@ getAppStatus = (robot, msg, cookie, bpmInstance, appID, frequency) ->
     "timeUnit": "#{frequency}",
     "timeUnitsNum": 1,
     "timeView": "#{frequency}"
-  };
+
   options =
     hostname: bpmInstance['host'],
     path: "/eum-web/bsmproxy?method="+ encodeURI("eumReports/applicationOverview/overview"),
