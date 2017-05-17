@@ -1,7 +1,7 @@
 {
   "name": "hubot-bpm",
   "description": "Package allows to trigger BPM APIs",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "author": "Michael Mishalov <michael.mishalov@hpe.com>",
   "license": "Apache License, Version 2.0",
   "keywords": [
