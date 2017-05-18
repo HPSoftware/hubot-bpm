@@ -33,10 +33,12 @@ describe 'show-app-status-test', ->
 
   context 'Show application status', ->
     beforeEach ->
-      nocks = nock.load('test/rec-show-app-status.json')
+      nocks = nock.load 'test/rec-show-app-status.json'
       for scope in nocks
-        scope.filteringRequestBody = (body, aRecordedBody) ->
-          return "*" #Since the actual body contains timestamp we need this WA to ignore it.
+        scope.filteringRequestBody (body, aRecordedBody)->
+          body = ""
+          body
+
 
     it 'Responds to bpm show status of app with id dbfc4bf683204c89d5a0f79692ecbc5b for the past hour timeframe', ->
       expectedResponse = 'Application status in the last hour:\n*Average availability*: 0\n*Average response*: 0\n*Total failures*: 0\n*Total volume*: 0\n'

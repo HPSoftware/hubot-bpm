@@ -50,11 +50,11 @@ getAppStatus = (robot, msg, cookie, bpmInstance, appID, frequency) ->
   robot.logger.debug "@BPM: timezone offset: "+ dateUtils.getTimeZoneOffset()
   postData =
     "applicationIds":  appIDsArray,
-    "clientGmtOffset": dateUtils.getTimeZoneOffset(),
-    "timeTo": toDate,
-    "timeFrom": fromDate,
+    "clientGmtOffset": "#{dateUtils.getTimeZoneOffset()}",
+    "timeTo": "#{toDate}",
+    "timeFrom": "#{fromDate}",
     "timeUnit": "#{frequency}",
-    "timeUnitsNum": 1,
+    "timeUnitsNum": "1",
     "timeView": "#{frequency}"
 
   options =
