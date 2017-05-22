@@ -31,7 +31,7 @@
     "hubot": "2.x",
     "hubot-enterprise": "github:eedevops/hubot-enterprise",
     "hubot-test-helper": "^1.5.0",
-    "jenkins-mocha": "^2.6.0",
+    "jenkins-mocha": "2.6.0",
     "jshint": "^2.9.2",
     "json-search": "https://github.com/garycourt/json-search.git",
     "matchdep": "~0.3.0",

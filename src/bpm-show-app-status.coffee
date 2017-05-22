@@ -76,7 +76,7 @@ getAppStatus = (robot, msg, cookie, bpmInstance, appID, frequency) ->
     res.on 'end', () ->
       robot.logger.debug "@BPM: Returning API response content"
       content = content.replace(/\b0(\d)/g, "$1")
-      #data = JSON.parse(content)
+      data = JSON.parse(content)
       data =
         success: false
       if data.success == true
