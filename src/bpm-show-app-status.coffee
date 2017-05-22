@@ -75,7 +75,7 @@ getAppStatus = (robot, msg, cookie, bpmInstance, appID, frequency) ->
       content += chunk.toString()
     res.on 'end', () ->
       robot.logger.debug "@BPM: Returning API response content"
-      content = content.replace(/\b0(\d)/g, "$1");
+      content = content.replace(/\b0(\d)/g, "$1")
       data = JSON.parse(content)
       if data.success == true
         result = 'Application status in the last '+frequency+':\n'
