@@ -33,7 +33,7 @@
     "hubot-test-helper": "^1.5.1",
     "jenkins-mocha": "^4.1.2",
     "jshint": "^2.9.2",
-    "json-search": "https://github.com/garycourt/json-search.git",
+    "json-search": "github:garycourt/json-search.git",
     "matchdep": "~0.3.0",
     "nock": "^8.0.0"
   },
