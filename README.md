@@ -165,7 +165,7 @@ _Syntax_: `bpm show apps for instance <instanceName>`
 
 _Description_: Shows application status of the application in terms of availability, performance and failures for the requested duration.
 
-_Syntax_: `bpm show status of app with id <appID> for the past <hour|day|week|month>`
+_Syntax_: `bpm show status of app with id <appID> for the past <hour|day|week|month> timeframe`
 
 **Show application status for a particular instance**
 
@@ -177,25 +177,25 @@ _Syntax_: `bpm show status of app with id <appID> for the past <hour|day|week|mo
 
 _Description_: Shows all the transactions under an application.
 
-_Syntax_: `bpm show transactions for app with id <appID>`
+_Syntax_: `bpm show transactions for app with <appID> id`
 
 **Show transactions for an application for a particular instance**
 
 _Description_: Shows all the transactions under an application for the requested instance in configuration.
 
-_Syntax_: `bpm show transactions for app with id <appID> for instance <instanceName>`
+_Syntax_: `bpm show transactions for app with <appID> id for instance <instanceName>`
 
 **Show locations for an application**
 
 _Description_: Shows all the locations on which the application is configured to run.
 
-_Syntax_: `bpm show locations for app with id <appID>`
+_Syntax_: `bpm show locations for app with <appID> id`
 
 **Show locations for an application for a particular instance**
 
 _Description_: Shows all the locations on which the application is configured to run for the requested instance in configuration.
 
-_Syntax_: `bpm show locations for app with id <appID> for instance <instanceName>`
+_Syntax_: `bpm show locations for app with <appID> id for instance <instanceName>`
 
 ## Limitations
 * https isn't supported
