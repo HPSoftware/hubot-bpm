@@ -10,21 +10,19 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and limitations under the License.
 ###
 
-
 nock = require 'nock'
 Helper = require('hubot-test-helper')
 chai = require 'chai'
 expect = chai.expect
 
-
 helper = new Helper([
   '../node_modules/hubot-enterprise/src/0_bootstrap.coffee',
-  '../src/bpm-invoke-script.coffee'])
+  '../src/bpm-show-apps.coffee'])
 
 nock.disableNetConnect()
 process.env.HUBOT_BPM_CONFIG_PATCH = "test/bpm-config-test.json"
 
-describe 'invoke-script-test', ->
+describe 'show-apps-test', ->
   @timeout 5000
   beforeEach (done) ->
     @room = helper.createRoom()
@@ -33,18 +31,16 @@ describe 'invoke-script-test', ->
   afterEach ->
     @room.destroy()
 
-
-  context 'Invoke specific script from specific BTF', ->
+  context 'Show available applications', ->
     beforeEach ->
-      nocks = nock.load('test/rec-script-btf.json')
+      nocks = nock.load('test/rec-show-apps.json')
 
-    it 'Responds to invoke script myDemoApp from btf myDemoApp', ->
-      expectedResponse = 'Sorry currently only Slack is supported :('
-      command = '@hubot bpm invoke script myDemoApp from btf myDemoApp from app demo for host myd-vm19775_london from London, UK location use bpm instance bpm_instance_1'
+    it 'Responds to bpm show apps', ->
+      expectedResponse = 'Found following applications:\n*Name*: testApp, *ID*: `7747bbc51e846435a22cd9fbac43a0c3`\n*Name*: test92832, *ID*: `ae9e216aabbbef703364a9f13232b6c3`\n'
+      command = 'bpm show apps'
       @room.user.say('alice', command).then =>
         expect(@room.messages).to.eql [
           ['alice', command]
-          ['hubot', 'Working on your request @alice, it may take some time.']
           ['hubot', expectedResponse]
         ]
         console.log(@room.messages.toString())

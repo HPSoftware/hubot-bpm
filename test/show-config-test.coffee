@@ -11,20 +11,17 @@ See the License for the specific language governing permissions and limitations 
 ###
 
 
-nock = require 'nock'
 Helper = require('hubot-test-helper')
 chai = require 'chai'
 expect = chai.expect
 
-
 helper = new Helper([
   '../node_modules/hubot-enterprise/src/0_bootstrap.coffee',
-  '../src/bpm-invoke-script.coffee'])
+  '../src/bpm-show-config.coffee'])
 
-nock.disableNetConnect()
 process.env.HUBOT_BPM_CONFIG_PATCH = "test/bpm-config-test.json"
 
-describe 'invoke-script-test', ->
+describe 'show-config-test', ->
   @timeout 5000
   beforeEach (done) ->
     @room = helper.createRoom()
@@ -34,19 +31,14 @@ describe 'invoke-script-test', ->
     @room.destroy()
 
 
-  context 'Invoke specific script from specific BTF', ->
-    beforeEach ->
-      nocks = nock.load('test/rec-script-btf.json')
+  context 'Show current configuration', ->
 
-    it 'Responds to invoke script myDemoApp from btf myDemoApp', ->
-      expectedResponse = 'Sorry currently only Slack is supported :('
-      command = '@hubot bpm invoke script myDemoApp from btf myDemoApp from app demo for host myd-vm19775_london from London, UK location use bpm instance bpm_instance_1'
+    it 'Responds to show current BPM config', ->
+      expectedResponse = '`bpm_instance_1`, BPM instance 1 - DO NOT CHANGE THIS CONFIGURATION IT USED BUY TEST AS IS \r\n'
+      command = '@hubot bpm show config'
       @room.user.say('alice', command).then =>
         expect(@room.messages).to.eql [
           ['alice', command]
-          ['hubot', 'Working on your request @alice, it may take some time.']
           ['hubot', expectedResponse]
         ]
         console.log(@room.messages.toString())
-
-nock.cleanAll()

@@ -83,8 +83,14 @@ buildRequest = (robot, instancesConfig, queryParams) ->
   robot.logger.debug "@BPM: generated query for invokeScript API: #{path}"
   path = "/rest/invokeScript" + path
 
+  if bpmInstance['bpm-host']?
+    bpmhost = bpmInstance['bpm-host']
+  else
+    bpmhost = bpmInstance['host']
+
+
   options =
-    hostname: bpmInstance['host'],
+    hostname: bpmhost,
     port: bpmInstance['port'],
     path: path,
     protocol: "#{bpmInstance['protocol']}:",
@@ -149,7 +155,7 @@ formatAndSendMessage = (robot, msg, responseJSON) ->
       "color": if errors then 'danger' else 'good'
       "pretext": " BTF: #{btfName}",
       "title": "Transactions Details:",
-      "thumb_url": "http://i.imgur.com/naHGuGo.png",
+      "thumb_url": "https://raw.githubusercontent.com/HPSoftware/hubot-bpm/master/resources/transaction.png",
       "fields": fields
     attachments.push attachment
   robot.logger.debug "@BPM: Sending message"

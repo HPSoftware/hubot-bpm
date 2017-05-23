@@ -1,7 +1,7 @@
 {
   "name": "hubot-bpm",
   "description": "Package allows to trigger BPM APIs",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "author": "Michael Mishalov <michael.mishalov@hpe.com>",
   "license": "Apache License, Version 2.0",
   "keywords": [
@@ -18,8 +18,7 @@
     "url": "https://github.com/HPSoftware/hubot-bpm/issues"
   },
   "dependencies": {
-    "coffee-script": "~1.6",
-    "json-search": "^0.6.46",
+    "coffee-script": "~1.12.6 ",
     "bluebird": "^3.3.4"
   },
   "peerDependencies": {
@@ -27,14 +26,14 @@
   },
   "devDependencies": {
     "chai": "^2.1.1",
-    "coffee-script": "1.6.3",
+    "coffee-script": "1.12.6 ",
     "coffeelint": "^1.15.7",
     "hubot": "2.x",
     "hubot-enterprise": "github:eedevops/hubot-enterprise",
-    "hubot-test-helper": "github:eedevops/hubot-test-helper",
-    "jenkins-mocha": "^2.6.0",
+    "hubot-test-helper": "^1.5.1",
+    "jenkins-mocha": "^4.1.2",
     "jshint": "^2.9.2",
-    "json-search": "0.6.45",
+    "json-search": "github:garycourt/json-search.git",
     "matchdep": "~0.3.0",
     "nock": "^8.0.0"
   },
@@ -42,7 +41,7 @@
   "scripts": {
     "coffeelint": "coffeelint --reporter jslint -r . > coffee-lint.xml || true",
     "jslint": "jshint --exclude-path .gitignore --reporter=jslint .> js-lint.xml || true",
-    "test": "ARTIFACTS_DIR='./' COVERAGE_DIR='./' TEST_DIR='./test/' jenkins-mocha --compilers \"coffee:coffee-script\" --check-leaks --no-coverage test/**/*.coffee || true",
+    "test": "ARTIFACTS_DIR='./' COVERAGE_DIR='./' TEST_DIR='./test/' jenkins-mocha --compilers \"coffee:coffee-script\"  --require \"coffee-script/register\" --check-leaks --no-coverage test/**/*.coffee || true",
     "lint": "coffeelint -r .; jshint --exclude-path .gitignore . || true"
   },
   "coffeelintConfig": {
