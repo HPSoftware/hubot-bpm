@@ -15,7 +15,7 @@ This is a project enable BPM users to connect BPM to ChatOps tools and contains 
 1. Generate new Hubot deployment by running `yo hubot-enterprise` command or use an existing deployment you already have.
 2. From the Hubot main directory, run the following command:
 `npm install git+https://github.com/HPSoftware/hubot-bpm.git --save `
-    * This command will install hubot-sitescope package on your Hubot.
+    * This command will install hubot-bpm package on your Hubot.
 3. Then add `hubot-bpm` to your `external-scripts.json` file contains list of packages from npm:
 ```json
 [
